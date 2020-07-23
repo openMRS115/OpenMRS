@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ 
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9
+                  http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
+ 
+    <!--
+    	See http://wiki.openmrs.org/display/docs/Module+liquibase+File for 
+    	documentation on this file.
+    
+        See http://www.liquibase.org/manual/home#available_database_refactorings
+        for a list of supported elements and attributes
+    -->
+ 
+	<changeSet id="laboratory20200429" author="sam">
+		<preConditions onFail="MARK_RAN">
+			<not><tableExists tableName="d_labitems"/></not>
+		</preConditions>
+		<comment>
+			Creating the laboratory_item table
+		</comment>
+		<createTable tableName="d_labitems">
+			<column name="itemid" type="int" autoIncrement="true">
+				<constraints primaryKey="true" nullable="false"/>
+			</column>
+			<column name="uuid" type="char(38)">
+				<constraints nullable="false" unique="true"></constraints>
+			</column>
+			<column name="label" type="varchar(255)" />
+			<column name="fluid" type="varchar(255)" />
+			<column name="category" type="varchar(255)" />
+			<column name="ioinic_code" type="varchar(255)" />
+		</createTable>
+    </changeSet>
+	<changeSet id="laboratory20200429-2" author="sam">
+		<preConditions onFail="MARK_RAN">
+			<not><tableExists tableName="admissions"/></not>
+		</preConditions>
+		<comment>
+			Creating the admissions table
+		</comment>
+		<createTable tableName="admissions">
+			<column name="hadm_id" type="int" autoIncrement="true">
+				<constraints primaryKey="true" nullable="false"/>
+			</column>
+			<column name="uuid" type="char(38)">
+				<constraints nullable="false" unique="true"></constraints>
+			</column><!--
+			<column name="subject_id" type="int" autoIncrement="false">
+				<constraints nullable="false" />
+			</column>-->
+			<column name="admittime" type="date" />
+			<column name="dischtime" type="date" />
+			<column name="deathtime" type="date" />
+			<column name="admission_type" type="varchar(255)" />
+			<column name="admission_location" type="varchar(255)"/>
+			<column name="discharge_location" type="varchar(255)"/>
+			<column name="insurance" type="varchar(255)"/>
+			<column name="language" type="varchar(255)"/>
+			<column name="religion" type="varchar(255)"/>
+			<column name="marital_status" type="varchar(255)"/>
+			<column name="ethnicity" type="varchar(255)"/>
+			<column name="edregtime" type="date"/>
+			<column name="edouttime" type="date"/>
+			<column name="diagnosis" type="varchar(255)"/>
+			<column name="hospital_expire_flag" type="varchar(255)"/>
+			<column name="has_chartevents_data" type="BOOLEAN"/><!--
+			<addForeignKeyConstraint constraintName="admissions_subject_id_fk"
+				baseTableName="admissions" baseColumnNames="subject_id"
+				referencedTableName="patient" referencedColumnNames="patient_id" />-->
+		</createTable>
+    </changeSet>
+	<changeSet id="laboratory20200429-4" author="sam">
+		<preConditions onFail="MARK_RAN">
+			<not><tableExists tableName="labevents"/></not>
+		</preConditions>
+		<comment>
+			Creating the labevents table
+		</comment>
+		<createTable tableName="labevents">
+			<column name="id" type="int" autoIncrement="true">
+				<constraints primaryKey="true" nullable="false"/>
+			</column>
+			<column name="charttime" type="date"/>
+			<column name="value" type="varchar(200)"/>
+			<column name="valuenum" type="double"/>
+			<column name="valueuom" type="varchar(20)"/>
+			<column name="flag" type="varchar(20)"/>
+		</createTable>
+    </changeSet>
+</databaseChangeLog>

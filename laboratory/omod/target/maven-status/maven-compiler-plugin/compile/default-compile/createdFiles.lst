@@ -1,0 +1,2 @@
+org/openmrs/module/laboratory/extension/html/AdminList.class
+org/openmrs/module/laboratory/web/controller/LaboratoryController.class
